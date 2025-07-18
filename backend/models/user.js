@@ -28,6 +28,14 @@ const user=new mongoose.Schema({
         enum: ['admin', 'user'],
         default: 'user'
     },
+    phone :{
+        type: String,
+        unique: true
+    },
+    about: {
+        type: String,
+        default: ''
+    },
 },
 {
     timestamps: true
