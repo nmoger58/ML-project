@@ -12,7 +12,7 @@ export default function LeetCodeDashboard() {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const profileResponse = await fetch('http://localhost:3001/api/user/profile/lucifer58');
+        const profileResponse = await fetch('http://localhost:3001/api/user/profile/n07kiran');
         console.log('Profile response:', profileResponse.data);
         if (!profileResponse.ok) {
           throw new Error(`HTTP error! status: ${profileResponse.status}`);

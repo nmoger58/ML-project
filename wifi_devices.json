@@ -1,0 +1,315 @@
+[
+  {
+    "ip": "192.168.137.48",
+    "mac": "D8:32:E3:0B:B3:58",
+    "vendor": "Unknown",
+    "hostname": "M2004J19C-Redmi9Prim.mshome.net",
+    "open_ports": [],
+    "device_type": "\u2753 Unknown Device",
+    "status": "Active",
+    "source": "ARP Table"
+  },
+  {
+    "ip": "192.168.137.255",
+    "mac": "FF:FF:FF:FF:FF:FF",
+    "vendor": "Unknown",
+    "hostname": "",
+    "open_ports": [],
+    "device_type": "\u2753 Unknown Device",
+    "status": "Active",
+    "source": "ARP Table"
+  },
+  {
+    "ip": "224.0.0.2",
+    "mac": "01:00:5E:00:00:02",
+    "vendor": "Unknown",
+    "hostname": "all-routers.mcast.net",
+    "open_ports": [],
+    "device_type": "\u2753 Unknown Device",
+    "status": "Active",
+    "source": "ARP Table"
+  },
+  {
+    "ip": "224.0.0.22",
+    "mac": "01:00:5E:00:00:16",
+    "vendor": "Unknown",
+    "hostname": "igmp.mcast.net",
+    "open_ports": [],
+    "device_type": "\u2753 Unknown Device",
+    "status": "Active",
+    "source": "ARP Table"
+  },
+  {
+    "ip": "224.0.0.251",
+    "mac": "01:00:5E:00:00:FB",
+    "vendor": "Unknown",
+    "hostname": "mdns.mcast.net",
+    "open_ports": [],
+    "device_type": "\u2753 Unknown Device",
+    "status": "Active",
+    "source": "ARP Table"
+  },
+  {
+    "ip": "224.0.0.253",
+    "mac": "01:00:5E:00:00:FD",
+    "vendor": "Unknown",
+    "hostname": "",
+    "open_ports": [],
+    "device_type": "\u2753 Unknown Device",
+    "status": "Active",
+    "source": "ARP Table"
+  },
+  {
+    "ip": "224.77.77.77",
+    "mac": "01:00:5E:4D:4D:4D",
+    "vendor": "Unknown",
+    "hostname": "",
+    "open_ports": [],
+    "device_type": "\u2753 Unknown Device",
+    "status": "Active",
+    "source": "ARP Table"
+  },
+  {
+    "ip": "239.192.152.143",
+    "mac": "01:00:5E:40:98:8F",
+    "vendor": "Unknown",
+    "hostname": "",
+    "open_ports": [],
+    "device_type": "\u2753 Unknown Device",
+    "status": "Active",
+    "source": "ARP Table"
+  },
+  {
+    "ip": "239.255.255.250",
+    "mac": "01:00:5E:7F:FF:FA",
+    "vendor": "Unknown",
+    "hostname": "",
+    "open_ports": [],
+    "device_type": "\u2753 Unknown Device",
+    "status": "Active",
+    "source": "ARP Table"
+  },
+  {
+    "ip": "255.255.255.255",
+    "mac": "FF:FF:FF:FF:FF:FF",
+    "vendor": "Unknown",
+    "hostname": "",
+    "open_ports": [],
+    "device_type": "\u2753 Unknown Device",
+    "status": "Active",
+    "source": "ARP Table"
+  },
+  {
+    "ip": "10.24.112.1",
+    "mac": "CC:4E:24:85:A8:F0",
+    "vendor": "Unknown",
+    "hostname": "",
+    "open_ports": [
+      80
+    ],
+    "device_type": "\u2753 Unknown Device",
+    "status": "Active",
+    "source": "ARP Table"
+  },
+  {
+    "ip": "10.24.112.64",
+    "mac": "64:49:7D:6F:92:C1",
+    "vendor": "Unknown",
+    "hostname": "SHUBH",
+    "open_ports": [
+      135,
+      445
+    ],
+    "device_type": "\u2753 Unknown Device",
+    "status": "Active",
+    "source": "ARP Table"
+  },
+  {
+    "ip": "10.24.112.93",
+    "mac": "14:D4:24:1B:7A:17",
+    "vendor": "Unknown",
+    "hostname": "",
+    "open_ports": [],
+    "device_type": "\u2753 Unknown Device",
+    "status": "Active",
+    "source": "ARP Table"
+  },
+  {
+    "ip": "10.24.112.122",
+    "mac": "B0:47:E9:ED:5E:C7",
+    "vendor": "Unknown",
+    "hostname": "",
+    "open_ports": [],
+    "device_type": "\u2753 Unknown Device",
+    "status": "Active",
+    "source": "ARP Table"
+  },
+  {
+    "ip": "10.24.112.171",
+    "mac": "90:10:57:BB:67:50",
+    "vendor": "Unknown",
+    "hostname": "",
+    "open_ports": [],
+    "device_type": "\u2753 Unknown Device",
+    "status": "Active",
+    "source": "ARP Table"
+  },
+  {
+    "ip": "10.24.113.68",
+    "mac": "4E:24:FB:49:E6:BB",
+    "vendor": "Unknown",
+    "hostname": "",
+    "open_ports": [],
+    "device_type": "\u2753 Unknown Device",
+    "status": "Active",
+    "source": "ARP Table"
+  },
+  {
+    "ip": "10.24.120.90",
+    "mac": "7E:29:45:A7:F3:48",
+    "vendor": "Unknown",
+    "hostname": "",
+    "open_ports": [],
+    "device_type": "\u2753 Unknown Device",
+    "status": "Active",
+    "source": "ARP Table"
+  },
+  {
+    "ip": "10.24.121.64",
+    "mac": "D6:02:11:1D:79:39",
+    "vendor": "Unknown",
+    "hostname": "",
+    "open_ports": [],
+    "device_type": "\u2753 Unknown Device",
+    "status": "Active",
+    "source": "ARP Table"
+  },
+  {
+    "ip": "10.24.123.199",
+    "mac": "EC:4C:8C:AE:A5:0B",
+    "vendor": "Unknown",
+    "hostname": "DESKTOP-SDLS6P3",
+    "open_ports": [
+      135,
+      139,
+      445
+    ],
+    "device_type": "\u2753 Unknown Device",
+    "status": "Active",
+    "source": "ARP Table"
+  },
+  {
+    "ip": "10.24.124.156",
+    "mac": "04:68:74:76:4F:B3",
+    "vendor": "Unknown",
+    "hostname": "PrajvalPatil",
+    "open_ports": [
+      135,
+      139,
+      445
+    ],
+    "device_type": "\u2753 Unknown Device",
+    "status": "Active",
+    "source": "ARP Table"
+  },
+  {
+    "ip": "10.24.127.239",
+    "mac": "20:0B:74:95:EA:6C",
+    "vendor": "Unknown",
+    "hostname": "",
+    "open_ports": [],
+    "device_type": "\u2753 Unknown Device",
+    "status": "Active",
+    "source": "ARP Table"
+  },
+  {
+    "ip": "224.0.0.252",
+    "mac": "01:00:5E:00:00:FC",
+    "vendor": "Unknown",
+    "hostname": "",
+    "open_ports": [],
+    "device_type": "\u2753 Unknown Device",
+    "status": "Active",
+    "source": "ARP Table"
+  },
+  {
+    "ip": "10.24.121.94",
+    "mac": "Unknown",
+    "vendor": "Unknown",
+    "hostname": "",
+    "open_ports": [],
+    "device_type": "\u2753 Unknown Device",
+    "status": "Active",
+    "source": "Ping Scan"
+  },
+  {
+    "ip": "10.24.121.102",
+    "mac": "Unknown",
+    "vendor": "Unknown",
+    "hostname": "",
+    "open_ports": [],
+    "device_type": "\u2753 Unknown Device",
+    "status": "Active",
+    "source": "Ping Scan"
+  },
+  {
+    "ip": "10.24.121.166",
+    "mac": "Unknown",
+    "vendor": "Unknown",
+    "hostname": "",
+    "open_ports": [],
+    "device_type": "\u2753 Unknown Device",
+    "status": "Active",
+    "source": "Ping Scan"
+  },
+  {
+    "ip": "10.24.121.167",
+    "mac": "Unknown",
+    "vendor": "Unknown",
+    "hostname": "",
+    "open_ports": [],
+    "device_type": "\u2753 Unknown Device",
+    "status": "Active",
+    "source": "Ping Scan"
+  },
+  {
+    "ip": "10.24.121.169",
+    "mac": "Unknown",
+    "vendor": "Unknown",
+    "hostname": "",
+    "open_ports": [],
+    "device_type": "\u2753 Unknown Device",
+    "status": "Active",
+    "source": "Ping Scan"
+  },
+  {
+    "ip": "10.24.121.184",
+    "mac": "Unknown",
+    "vendor": "Unknown",
+    "hostname": "",
+    "open_ports": [],
+    "device_type": "\u2753 Unknown Device",
+    "status": "Active",
+    "source": "Ping Scan"
+  },
+  {
+    "ip": "10.24.121.211",
+    "mac": "Unknown",
+    "vendor": "Unknown",
+    "hostname": "",
+    "open_ports": [],
+    "device_type": "\u2753 Unknown Device",
+    "status": "Active",
+    "source": "Ping Scan"
+  },
+  {
+    "ip": "10.24.121.227",
+    "mac": "Unknown",
+    "vendor": "Unknown",
+    "hostname": "",
+    "open_ports": [],
+    "device_type": "\u2753 Unknown Device",
+    "status": "Active",
+    "source": "Ping Scan"
+  }
+]

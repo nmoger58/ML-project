@@ -11,7 +11,7 @@ const LeetCodeAnalyzer = () => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const response = await fetch('http://127.0.0.1:3002/analyze/lucifer58');
+        const response = await fetch('http://127.0.0.1:3002/analyze/n07kiran');
         const result = await response.json();
         console.log('API Response:', result.data);
         // Check if the response has the expected structure

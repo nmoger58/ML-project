@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Proctoring System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .header h1 {
+            color: #2d3748;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .setup-panel, .exam-panel {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .setup-section {
+            margin-bottom: 25px;
+        }
+
+        .setup-section h3 {
+            color: #2d3748;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+            border-left: 4px solid #667eea;
+            padding-left: 15px;
+        }
+
+        .permission-item {
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .permission-item.granted {
+            border-color: #48bb78;
+            background: #f0fff4;
+        }
+
+        .permission-item.denied {
+            border-color: #f56565;
+            background: #fff5f5;
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-danger {
+            background: linear-gradient(45deg, #f56565, #e53e3e);
+        }
+
+        .btn-success {
+            background: linear-gradient(45deg, #48bb78, #38a169);
+        }
+
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+
+        .status-granted {
+            background: #48bb78;
+            box-shadow: 0 0 10px rgba(72, 187, 120, 0.5);
+        }
+
+        .status-denied {
+            background: #f56565;
+            box-shadow: 0 0 10px rgba(245, 101, 101, 0.5);
+        }
+
+        .status-pending {
+            background: #ed8936;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        .monitoring-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .video-container {
+            position: relative;
+            background: #000;
+            border-radius: 15px;
+            overflow: hidden;
+            min-height: 300px;
+        }
+
+        #videoPreview {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .monitoring-stats {
+            background: #f8fafc;
+            border-radius: 15px;
+            padding: 20px;
+        }
+
+        .stat-item {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            border-left: 4px solid #667eea;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .stat-value {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #2d3748;
+        }
+
+        .device-list {
+            max-height: 200px;
+            overflow-y: auto;
+            background: #f8fafc;
+            border-radius: 10px;
+            padding: 10px;
+            margin-top: 10px;
+        }
+
+        .device-item {
+            background: white;
+            padding: 10px;
+            margin-bottom: 8px;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            font-size: 0.9rem;
+        }
+
+        .warning-banner {
+            background: linear-gradient(45deg, #f56565, #e53e3e);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: bold;
+            animation: slideDown 0.5s ease;
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .fullscreen-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(135deg, #2d3748 0%, #4a5568 100%);
+            z-index: 10000;
+            display: flex;
+            flex-direction: column;
+            color: white;
+        }
+
+        .exam-header {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .exam-content {
+            flex: 1;
+            padding: 30px;
+            overflow-y: auto;
+        }
+
+        .question-container {
+            background: rgba(255, 255, 255, 0.95);
+            color: #333;
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .mini-video {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 200px;
+            height: 150px;
+            background: #000;
+            border-radius: 10px;
+            border: 2px solid #667eea;
+            z-index: 10001;
+            overflow: hidden;
+        }
+
+        .mini-video video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .violations-counter {
+            background: #f56565;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(45deg, #48bb78, #38a169);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
+        #log {
+            max-height: 200px;
+            overflow-y: auto;
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            margin-top: 20px;
+        }
+
+        .log-entry {
+            margin-bottom: 8px;
+            padding: 5px;
+            border-radius: 4px;
+        }
+
+        .log-info { background: rgba(66, 153, 225, 0.2); }
+        .log-warning { background: rgba(237, 137, 54, 0.2); }
+        .log-error { background: rgba(245, 101, 101, 0.2); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔒 Advanced Proctoring System</h1>
+            <p>Comprehensive exam monitoring with AI-powered supervision</p>
+        </div>
+
+        <div id="setupPanel" class="setup-panel">
+            <div class="setup-section">
+                <h3>📹 Camera & Microphone Setup</h3>
+                <div id="cameraPermission" class="permission-item">
+                    <span class="status-indicator status-pending"></span>
+                    <strong>Camera Access:</strong> Required for visual monitoring
+                    <button class="btn" onclick="requestCamera()" style="float: right;">Grant Access</button>
+                </div>
+                <div id="microphonePermission" class="permission-item">
+                    <span class="status-indicator status-pending"></span>
+                    <strong>Microphone Access:</strong> Required for audio monitoring
+                    <button class="btn" onclick="requestMicrophone()" style="float: right;">Grant Access</button>
+                </div>
+            </div>
+
+            <div class="setup-section">
+                <h3>📱 Device Detection</h3>
+                <div id="devicePermission" class="permission-item">
+                    <span class="status-indicator status-pending"></span>
+                    <strong>Bluetooth/WiFi Scanning:</strong> Detects nearby devices
+                    <button class="btn" onclick="startDeviceDetection()" style="float: right;">Start Scan</button>
+                </div>
+                <div class="device-list" id="deviceList">
+                    <div class="device-item">No devices detected yet...</div>
+                </div>
+            </div>
+
+            <div class="setup-section">
+                <h3>🔒 Security Features</h3>
+                <div class="permission-item granted">
+                    <span class="status-indicator status-granted"></span>
+                    <strong>Fullscreen Lock:</strong> Prevents window switching
+                </div>
+                <div class="permission-item granted">
+                    <span class="status-indicator status-granted"></span>
+                    <strong>Tab Monitoring:</strong> Detects focus changes
+                </div>
+                <div class="permission-item granted">
+                    <span class="status-indicator status-granted"></span>
+                    <strong>Screenshot Prevention:</strong> Blocks screen capture
+                </div>
+            </div>
+
+            <div class="monitoring-grid">
+                <div class="video-container">
+                    <video id="videoPreview" autoplay muted playsinline></video>
+                </div>
+                <div class="monitoring-stats">
+                    <div class="stat-item">
+                        <div class="stat-label">Session Status</div>
+                        <div class="stat-value" id="sessionStatus">Not Started</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">Violations Count</div>
+                        <div class="stat-value" id="violationsCount">0</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">Devices Nearby</div>
+                        <div class="stat-value" id="deviceCount">0</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">Connection Status</div>
+                        <div class="stat-value" id="connectionStatus">Online</div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 30px;">
+                <button id="startExamBtn" class="btn btn-success" onclick="startExam()" disabled>
+                    🚀 Start Proctored Exam
+                </button>
+            </div>
+
+            <div id="log"></div>
+        </div>
+
+        <div id="examPanel" class="hidden">
+            <div class="fullscreen-overlay">
+                <div class="exam-header">
+                    <div>
+                        <h2>📝 Proctored Examination</h2>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="examProgress"></div>
+                        </div>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 20px;">
+                        <div class="violations-counter">
+                            Violations: <span id="examViolations">0</span>
+                        </div>
+                        <div id="examTimer">60:00</div>
+                        <button class="btn btn-danger" onclick="endExam()">End Exam</button>
+                    </div>
+                </div>
+                <div class="exam-content">
+                    <div class="question-container">
+                        <h3>Sample Question 1</h3>
+                        <p>What is the primary purpose of a proctoring system in online examinations?</p>
+                        <div style="margin-top: 20px;">
+                            <label><input type="radio" name="q1" value="a"> A) To make exams more difficult</label><br><br>
+                            <label><input type="radio" name="q1" value="b"> B) To ensure exam integrity and prevent cheating</label><br><br>
+                            <label><input type="radio" name="q1" value="c"> C) To record students for entertainment</label><br><br>
+                            <label><input type="radio" name="q1" value="d"> D) To replace human teachers</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="mini-video">
+                    <video id="examVideo" autoplay muted playsinline></video>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let mediaStream = null;
+        let isExamActive = false;
+        let violationsCount = 0;
+        let examTimer = null;
+        let examTimeLeft = 3600; // 60 minutes
+        let detectedDevices = new Set();
+        let permissionsGranted = {
+            camera: false,
+            microphone: false,
+            devices: false
+        };
+
+        // Logging function
+        function addLog(message, type = 'info') {
+            const log = document.getElementById('log');
+            const entry = document.createElement('div');
+            entry.className = `log-entry log-${type}`;
+            entry.innerHTML = `[${new Date().toLocaleTimeString()}] ${message}`;
+            log.appendChild(entry);
+            log.scrollTop = log.scrollHeight;
+        }
+
+        // Camera permission and setup
+        async function requestCamera() {
+            try {
+                addLog('Requesting camera access...', 'info');
+                const stream = await navigator.mediaDevices.getUserMedia({ 
+                    video: { 
+                        width: { ideal: 1280 },
+                        height: { ideal: 720 },
+                        facingMode: 'user'
+                    } 
+                });
+                
+                mediaStream = stream;
+                document.getElementById('videoPreview').srcObject = stream;
+                
+                const cameraPermission = document.getElementById('cameraPermission');
+                cameraPermission.classList.add('granted');
+                cameraPermission.querySelector('.status-indicator').className = 'status-indicator status-granted';
+                cameraPermission.querySelector('button').textContent = '✓ Granted';
+                cameraPermission.querySelector('button').disabled = true;
+                
+                permissionsGranted.camera = true;
+                addLog('Camera access granted successfully', 'info');
+                checkAllPermissions();
+            } catch (error) {
+                addLog(`Camera access denied: ${error.message}`, 'error');
+                const cameraPermission = document.getElementById('cameraPermission');
+                cameraPermission.classList.add('denied');
+                cameraPermission.querySelector('.status-indicator').className = 'status-indicator status-denied';
+            }
+        }
+
+        // Microphone permission
+        async function requestMicrophone() {
+            try {
+                addLog('Requesting microphone access...', 'info');
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                
+                const micPermission = document.getElementById('microphonePermission');
+                micPermission.classList.add('granted');
+                micPermission.querySelector('.status-indicator').className = 'status-indicator status-granted';
+                micPermission.querySelector('button').textContent = '✓ Granted';
+                micPermission.querySelector('button').disabled = true;
+                
+                permissionsGranted.microphone = true;
+                addLog('Microphone access granted successfully', 'info');
+                checkAllPermissions();
+                
+                // Stop the audio stream as we only needed permission
+                stream.getTracks().forEach(track => track.stop());
+            } catch (error) {
+                addLog(`Microphone access denied: ${error.message}`, 'error');
+                const micPermission = document.getElementById('microphonePermission');
+                micPermission.classList.add('denied');
+                micPermission.querySelector('.status-indicator').className = 'status-indicator status-denied';
+            }
+        }
+
+        // Device detection (simulated)
+        async function startDeviceDetection() {
+            addLog('Starting device detection...', 'info');
+            
+            try {
+                // Simulate Bluetooth device detection
+                if ('bluetooth' in navigator) {
+                    addLog('Bluetooth API available - scanning for devices', 'info');
+                }
+                
+                // Simulate device discovery
+                const deviceTypes = ['iPhone 13', 'Samsung Galaxy S21', 'iPad Air', 'MacBook Pro', 'Android Phone', 'Wireless Earbuds'];
+                const deviceList = document.getElementById('deviceList');
+                deviceList.innerHTML = '';
+                
+                // Simulate discovering devices over time
+                for (let i = 0; i < 3; i++) {
+                    setTimeout(() => {
+                        const deviceName = deviceTypes[Math.floor(Math.random() * deviceTypes.length)];
+                        const distance = (Math.random() * 8 + 2).toFixed(1); // 2-10 meters
+                        
+                        if (distance <= 5) {
+                            detectedDevices.add(deviceName);
+                            const deviceItem = document.createElement('div');
+                            deviceItem.className = 'device-item';
+                            deviceItem.innerHTML = `📱 ${deviceName} - ${distance}m away ${distance <= 5 ? '⚠️' : ''}`;
+                            deviceList.appendChild(deviceItem);
+                            
+                            addLog(`Device detected within 5m: ${deviceName} (${distance}m)`, 'warning');
+                        }
+                        
+                        document.getElementById('deviceCount').textContent = detectedDevices.size;
+                    }, i * 1000);
+                }
+                
+                const devicePermission = document.getElementById('devicePermission');
+                devicePermission.classList.add('granted');
+                devicePermission.querySelector('.status-indicator').className = 'status-indicator status-granted';
+                devicePermission.querySelector('button').textContent = '✓ Scanning';
+                devicePermission.querySelector('button').disabled = true;
+                
+                permissionsGranted.devices = true;
+                addLog('Device detection started successfully', 'info');
+                checkAllPermissions();
+                
+            } catch (error) {
+                addLog(`Device detection failed: ${error.message}`, 'error');
+            }
+        }
+
+        // Check if all permissions are granted
+        function checkAllPermissions() {
+            const allGranted = Object.values(permissionsGranted).every(granted => granted);
+            const startBtn = document.getElementById('startExamBtn');
+            
+            if (allGranted) {
+                startBtn.disabled = false;
+                startBtn.innerHTML = '🚀 Start Proctored Exam';
+                document.getElementById('sessionStatus').textContent = 'Ready to Start';
+                addLog('All permissions granted - ready to start exam', 'info');
+            }
+        }
+
+        // Start the exam
+        function startExam() {
+            if (!confirm('Starting the exam will enter fullscreen mode and begin monitoring. Continue?')) {
+                return;
+            }
+            
+            addLog('Starting proctored exam...', 'info');
+            isExamActive = true;
+            document.getElementById('sessionStatus').textContent = 'Active';
+            document.getElementById('violationsCount').textContent = violationsCount;
+            
+            // Hide setup panel and show exam panel
+            document.getElementById('setupPanel').classList.add('hidden');
+            document.getElementById('examPanel').classList.remove('hidden');
+            
+            // Setup exam video stream
+            if (mediaStream) {
+                document.getElementById('examVideo').srcObject = mediaStream;
+            }
+            
+            // Enter fullscreen
+            document.documentElement.requestFullscreen().catch(err => {
+                addLog(`Fullscreen request failed: ${err}`, 'error');
+            });
+            
+            // Start exam timer
+            startExamTimer();
+            
+            // Setup monitoring
+            setupMonitoring();
+            
+            addLog('Exam started successfully - monitoring active', 'info');
+        }
+
+        // Setup monitoring systems
+        function setupMonitoring() {
+            // Prevent right-click
+            document.addEventListener('contextmenu', e => {
+                e.preventDefault();
+                recordViolation('Right-click detected');
+            });
+            
+            // Prevent common shortcuts
+            document.addEventListener('keydown', e => {
+                const forbiddenKeys = [
+                    'F12', 'F11', 'PrintScreen',
+                    'Alt+Tab', 'Ctrl+Shift+I', 'Ctrl+U',
+                    'Ctrl+Shift+C', 'Ctrl+A', 'Ctrl+C', 'Ctrl+V'
+                ];
+                
+                const combo = [];
+                if (e.ctrlKey) combo.push('Ctrl');
+                if (e.altKey) combo.push('Alt');
+                if (e.shiftKey) combo.push('Shift');
+                combo.push(e.key);
+                
+                const keyCombo = combo.join('+');
+                
+                if (forbiddenKeys.some(forbidden => keyCombo.includes(forbidden))) {
+                    e.preventDefault();
+                    recordViolation(`Forbidden key combination: ${keyCombo}`);
+                }
+            });
+            
+            // Monitor tab visibility
+            document.addEventListener('visibilitychange', () => {
+                if (document.hidden && isExamActive) {
+                    recordViolation('Tab/window focus lost');
+                }
+            });
+            
+            // Monitor fullscreen exit
+            document.addEventListener('fullscreenchange', () => {
+                if (!document.fullscreenElement && isExamActive) {
+                    recordViolation('Fullscreen mode exited');
+                    // Try to re-enter fullscreen
+                    setTimeout(() => {
+                        document.documentElement.requestFullscreen();
+                    }, 1000);
+                }
+            });
+            
+            // Simulate face detection violations (random)
+            setInterval(() => {
+                if (isExamActive && Math.random() < 0.1) { // 10% chance every 5 seconds
+                    const violations = [
+                        'Multiple faces detected',
+                        'Face not visible',
+                        'Looking away from screen',
+                        'Suspicious movement detected'
+                    ];
+                    recordViolation(violations[Math.floor(Math.random() * violations.length)]);
+                }
+            }, 5000);
+        }
+
+        // Record violation
+        function recordViolation(violation) {
+            violationsCount++;
+            document.getElementById('examViolations').textContent = violationsCount;
+            addLog(`VIOLATION: ${violation}`, 'error');
+            
+            // Auto-end exam after 5 violations
+            if (violationsCount >= 5) {
+                alert('Too many violations detected. Exam will be terminated.');
+                endExam();
+            }
+        }
+
+        // Start exam timer
+        function startExamTimer() {
+            examTimer = setInterval(() => {
+                examTimeLeft--;
+                const minutes = Math.floor(examTimeLeft / 60);
+                const seconds = examTimeLeft % 60;
+                document.getElementById('examTimer').textContent = 
+                    `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                
+                // Update progress bar
+                const progress = ((3600 - examTimeLeft) / 3600) * 100;
+                document.getElementById('examProgress').style.width = `${progress}%`;
+                
+                if (examTimeLeft <= 0) {
+                    endExam();
+                }
+            }, 1000);
+        }
+
+        // End exam
+        function endExam() {
+            isExamActive = false;
+            clearInterval(examTimer);
+            
+            // Exit fullscreen
+            if (document.fullscreenElement) {
+                document.exitFullscreen();
+            }
+            
+            // Stop media streams
+            if (mediaStream) {
+                mediaStream.getTracks().forEach(track => track.stop());
+            }
+            
+            addLog('Exam ended', 'info');
+            alert(`Exam completed!\nViolations: ${violationsCount}\nTime taken: ${formatTime(3600 - examTimeLeft)}`);
+            
+            // Reset to setup panel
+            document.getElementById('examPanel').classList.add('hidden');
+            document.getElementById('setupPanel').classList.remove('hidden');
+            
+            // Reset states
+            violationsCount = 0;
+            examTimeLeft = 3600;
+        }
+
+        // Format time helper
+        function formatTime(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = seconds % 60;
+            return `${mins}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        // Initialize on page load
+        window.addEventListener('load', () => {
+            addLog('Proctoring system initialized', 'info');
+            
+            // Check browser capabilities
+            if (!navigator.mediaDevices) {
+                addLog('Media devices not supported in this browser', 'error');
+            }
+            
+            if (!document.fullscreenEnabled) {
+                addLog('Fullscreen not supported in this browser', 'warning');
+            }
+            
+            // Connection status monitoring
+            window.addEventListener('online', () => {
+                document.getElementById('connectionStatus').textContent = 'Online';
+                addLog('Connection restored', 'info');
+            });
+            
+            window.addEventListener('offline', () => {
+                document.getElementById('connectionStatus').textContent = 'Offline';
+                addLog('Connection lost - exam may be compromised', 'error');
+                if (isExamActive) {
+                    recordViolation('Internet connection lost');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
