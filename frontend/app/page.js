@@ -3,6 +3,8 @@ import LeetCodeDashboard from "./components/LeetcodeDashboard";
 import Navbar from "./components/Navbar";
 import LeetCodeAnalysisPanel from "./components/LeetCodeAnalysisPanel";
 import { useEffect } from "react";
+import CombinedLeetCodeDashboard from "./components/LeetCode";
+
 export default function Home() {
   useEffect(() => {
     // This effect runs once when the component mounts
@@ -28,8 +30,7 @@ export default function Home() {
   return (
     <div >
       <Navbar></Navbar>
-      <LeetCodeDashboard />
-      <LeetCodeAnalysisPanel  />
+      <CombinedLeetCodeDashboard />
     </div>
   );
 }
